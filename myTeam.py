@@ -147,7 +147,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
 
     #sets up the boundary so pacman knows to go back at a point
     boundary_line = []
-    if successor.isOnRedTeam:
+    if gameState.isOnRedTeam(self.index):
       middle_line = (gameState.data.layout.width - 2) / 2 - 2
     else:
       middle_line = (gameState.data.layout.width - 2) / 2 + 2
