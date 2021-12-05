@@ -70,9 +70,9 @@ class ReflexCaptureAgent(CaptureAgent):
     actions = gameState.getLegalActions(self.index)
 
     # You can profile your evaluation time by uncommenting these lines
-    # start = time.time()
+    start = time.time()
     values = [self.evaluate(gameState, a) for a in actions]
-    # print 'eval time for agent %d: %.4f' % (self.index, time.time() - start)
+    print('eval time for agent %d: %.4f' % (self.index, time.time() - start))
 
     maxValue = max(values)
     bestActions = [a for a, v in zip(actions, values) if v == maxValue]
@@ -617,7 +617,10 @@ class MinimaxAgent(CaptureAgent):
     return bestAction
 
   def chooseAction(self, gameState):
-    return self.chooseMiniMaxAction(gameState)
+    start = time.time()
+    a = self.chooseMiniMaxAction(gameState)
+    print(time.time() - start)
+    return a
 
   def evaluateOffense(self, gameState, ID):
     """
@@ -699,7 +702,7 @@ class MinimaxAgent(CaptureAgent):
 
       features["to_boundary"] = min([self.getMazeDistance(c_pos, b_pos) for b_pos in b_line])
 
-      features["to_boundary"]*= features["dots"]
+      features["to_boundary"]*= features["dots"]/2
     #================================================================================
 
 
@@ -723,7 +726,7 @@ class MinimaxAgent(CaptureAgent):
     #================================================================================
 
 
-    # Closest & Furthest Food
+    # Closest Food
     #================================================================================
     #if closest_ghost < 3:
     #  features["close_food"] = 20
@@ -737,7 +740,7 @@ class MinimaxAgent(CaptureAgent):
 
     # Closest Capsule
     #================================================================================
-    # caps = gameState.getCapsules()
+    #caps = gameState.getCapsules()
     # if len(caps) != 0:
     #   features["capsule"] = min([self.getMazeDistance(c_pos, cap_pos) for cap_pos in caps])
     # else:
@@ -846,8 +849,8 @@ class MinimaxAgent(CaptureAgent):
     #   features["dist_food"] = 0
     # #================================================================================
 
-    # if features["to_boundary"] < 4:
-    #   features["to_boundary"] = 0
+    if features["to_boundary"] < 4:
+       features["to_boundary"] = 0
 
     # Ignore guarding food when invaders
     #================================================================================
@@ -858,11 +861,12 @@ class MinimaxAgent(CaptureAgent):
       features["dist_food"] = 0
       features["patrol"] = 0
     #================================================================================
+    #print(features)
     return features
 
   def getDWeights(self, gameState):
-    return {'numInvaders': -1000, 'onDefense': 5, 
-            'invaderDistance': -25, 'dist_food': -5,
+    return {'numInvaders': -1000000, 'onDefense': 5, 
+            'invaderDistance': -100, 'dist_food': -20,
             'to_boundary' : -20}
             # , 'patrol' : -2}
 
@@ -910,7 +914,6 @@ class DefensiveMinimaxAgent(MinimaxAgent):
     self.start = gameState.getAgentPosition(self.index)
     CaptureAgent.registerInitialState(self, gameState)
     self.depth = 1
-
 
 
 
