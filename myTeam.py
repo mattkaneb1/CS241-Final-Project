@@ -174,8 +174,8 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
 
 
 
-    print("Evil Pacman: ", evil_pacman)
-    print("Evil Ghost: ", evil_ghost)
+    #print("Evil Pacman: ", evil_pacman)
+    #print("Evil Ghost: ", evil_ghost)
     #now features to work with these two
     current_position = successor.getAgentState(self.index).getPosition()
     last_pos = gameState.getAgentState(self.index).getPosition()
@@ -185,7 +185,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
 
 
 
-    print(current_position)
+    #print(current_position)
 
     features["ghost_distance"] = 10 #just assume kinda far away all the time
 
@@ -219,10 +219,10 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
     features["to_boundary"]*= features["carrying_dots"]/5
 
 
-    print(features)
+    #print(features)
 
-    if ghost.scaredTimer > 0:
-      features["ghost_distance"] = 10
+    #if ghost.scaredTimer > 0:
+    #  features["ghost_distance"] = 10
 
     myPos = successor.getAgentState(self.index).getPosition()
 
@@ -245,7 +245,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
       features["maxDistance"] = 0
 
 
-    print(features)
+    #print(features)
     return features
 
   def getWeights(self, gameState, action):
@@ -265,8 +265,8 @@ class DefensiveReflexAgent(ReflexCaptureAgent):
   """
 
   def getFeatures(self, gameState, action):
-    print("INFDKLADFJN;LSDKJF;LAKSJDF;LKASJDFL;KASDJF;LKSJF")
-    print(self.index)
+    #print("INFDKLADFJN;LSDKJF;LAKSJDF;LKASJDFL;KASDJF;LKSJF")
+    #print(self.index)
     features = util.Counter()
     successor = self.getSuccessor(gameState, action)
 
@@ -311,7 +311,7 @@ class DefensiveReflexAgent(ReflexCaptureAgent):
     else:
       our_food = gameState.getBlueFood().asList()
 
-    print(our_food)
+    #print(our_food)
 
     summed = 0
     for food in our_food:
@@ -327,9 +327,9 @@ class DefensiveReflexAgent(ReflexCaptureAgent):
 
 
 
-    print("-------------------")
-    print(features)
-    print("-------------------")
+    # print("-------------------")
+    # print(features)
+    # print("-------------------")
 
 
     return features
